@@ -1,26 +1,46 @@
 #include "app_config.h"
+#include "alert_task.h"
 #include "sensor_task.h"
 #include "alarm_task.h"
+#include "event_log.h"
 #include "wifi_manager.h"
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "esp_log.h"
+#include "esp_task_wdt.h"
+
+static void configure_task_watchdog(void)
+{
+    esp_task_wdt_config_t wdt_config = {
+        .timeout_ms = TASK_WATCHDOG_TIMEOUT_MS,
+        .idle_core_mask = 0,
+        .trigger_panic = true,
+    };
+
+    esp_err_t err = esp_task_wdt_init(&wdt_config);
+    if (err == ESP_ERR_INVALID_STATE) {
+        ESP_LOGW("main", "Task watchdog already initialized");
+    } else {
+        ESP_ERROR_CHECK(err);
+    }
+}
 
 static const char *TAG = "main";
 
 void app_main(void)
 {
     ESP_LOGI(TAG, "Smart Flood Detection System starting up");
+    event_log_init();
+    configure_task_watchdog();
 
-    // Shared queue: sensor_task produces state-change events,
-    // alarm_task consumes them. Decoupling these two via a queue
-    // (rather than a shared flag) keeps each task's responsibility
-    // isolated and makes the local alarm path independent of
-    // anything else in the system.
-    QueueHandle_t event_queue = xQueueCreate(10, sizeof(system_event_t));
-    if (event_queue == NULL) {
-        ESP_LOGE(TAG, "Failed to create event queue, halting");
+    // Dedicated alarm queue: sensor_task publishes local-alarm events here
+    // first. Remote alerting has a separate queue so network work cannot
+    // consume, gate, or delay the local alarm path.
+    QueueHandle_t alarm_event_queue = xQueueCreate(10, sizeof(system_event_t));
+    QueueHandle_t alert_event_queue = xQueueCreate(10, sizeof(system_event_t));
+    if (alarm_event_queue == NULL || alert_event_queue == NULL) {
+        ESP_LOGE(TAG, "Failed to create event queues, halting");
         return;
     }
 
@@ -31,11 +51,8 @@ void app_main(void)
     // the physical safety mechanism.
     wifi_manager_start();
 
-    alarm_task_start(event_queue);
-    sensor_task_start(event_queue);
-
-    // TODO: add a networking task that watches the same event_queue
-    // (or a second queue fed by sensor_task) and, when
-    // wifi_manager_is_connected() is true, pushes an alert via
-    // MQTT/HTTP to the notification backend.
+    event_log_dump_task_start();
+    alarm_task_start(alarm_event_queue);
+    alert_task_start(alert_event_queue);
+    sensor_task_start(alarm_event_queue, alert_event_queue);
 }
