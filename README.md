@@ -85,7 +85,7 @@ The design prioritizes **reliability** and **fail-safe behavior** — a flood de
 
 ## Firmware
 
-Firmware is developed for the ESP32 with the following responsibilities:
+Firmware is developed for the ESP32 using ESP-IDF with the following responsibilities:
 
 - Periodic sensor polling with debouncing/averaging to avoid false positives from splashes or condensation
 - WiFi connection management, including reconnection logic on dropped connections
@@ -93,17 +93,11 @@ Firmware is developed for the ESP32 with the following responsibilities:
 - Local event logging (timestamped) for post-event review
 - Watchdog timer to recover from firmware hangs
 
-*(Language/framework — Arduino vs. ESP-IDF — to be finalized and documented here.)*
+The local buzzer/LED path is intentionally independent of WiFi: sensor events are delivered to a dedicated alarm queue before any optional remote-alert queue.
 
 ## Alerting & Connectivity
 
-When the water threshold is exceeded, the system pushes a notification over WiFi. Options under evaluation:
-
-- MQTT to a self-hosted or cloud broker, with a backend service triggering push notifications
-- Direct integration with a notification service (e.g., Telegram bot, Pushover)
-- Cloud IoT platform (e.g., AWS IoT Core) for scalability and remote dashboarding
-
-The chosen approach and its rationale will be documented here once finalized.
+When the water threshold is exceeded, the firmware can send a Telegram bot notification directly over HTTPS using ESP-IDF's `esp_http_client`. If WiFi is unavailable or credentials are not configured, the remote alert is skipped and the local alarm remains unaffected.
 
 ## Setup & Installation
 
@@ -116,7 +110,7 @@ cd Smart-Flood-Detection-System
 # (instructions to be added once firmware toolchain is finalized)
 ```
 
-Detailed step-by-step setup instructions — including WiFi credential configuration, sensor calibration, and alert service setup — will be added as the build progresses.
+Detailed step-by-step setup instructions — including NVS-based WiFi provisioning and final alert service setup — will be added as the build progresses. For now, WiFi credentials and Telegram placeholders live in `firmware/main/app_config.h`.
 
 ## Wiring Diagram
 
@@ -139,8 +133,10 @@ Results and test logs will be documented here as validation is completed.
 A flood detector is only useful if it works when it matters most. Key design principles:
 
 - **Local-first alarms** — the buzzer/LED triggers independently of WiFi connectivity, so a network outage doesn't silence the alert
+- **Isolated event queues** — remote alerting consumes a separate queue, so network code cannot steal or block alarm events
 - **Connection recovery** — firmware automatically attempts WiFi reconnection rather than requiring a manual reset
 - **Sensor validation** — averaging/debouncing logic to avoid missed or false detections
+- **Watchdog coverage** — the safety-critical sensor and alarm tasks are registered with the ESP-IDF task watchdog
 - **Power resilience** — evaluating battery backup so the system stays online during a power outage (a common co-occurrence with flooding events)
 
 ## Results
@@ -153,10 +149,13 @@ A flood detector is only useful if it works when it matters most. Key design pri
 
 ## Roadmap
 
-- [ ] Finalize sensor selection and calibrate thresholds
-- [ ] Build and test firmware (sensing + local alarm)
-- [ ] Implement WiFi connectivity and reconnection logic
-- [ ] Integrate push notification service
+- [ ] Finalize sensor selection and calibrate thresholds using serial raw-ADC calibration mode
+- [x] Build firmware task architecture for sensing + local alarm
+- [x] Implement WiFi connectivity and reconnection logic
+- [x] Integrate Telegram push notification task
+- [x] Add local RAM event logging and serial dump trigger
+- [x] Add task watchdog coverage for sensor and alarm tasks
+- [ ] Add NVS-based WiFi credential provisioning
 - [ ] Design and test enclosure for basement environment
 - [ ] Add battery backup for power-loss resilience
 - [ ] Conduct full end-to-end validation testing
