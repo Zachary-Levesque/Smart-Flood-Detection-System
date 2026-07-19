@@ -5,6 +5,7 @@
 #include "freertos/task.h"
 #include "driver/gpio.h"
 #include "esp_log.h"
+#include "esp_task_wdt.h"
 
 static const char *TAG = "alarm_task";
 
@@ -29,6 +30,8 @@ static void set_alarm_state(bool active)
 static void alarm_task(void *pvParameters)
 {
     QueueHandle_t event_queue = (QueueHandle_t) pvParameters;
+    ESP_ERROR_CHECK(esp_task_wdt_add(NULL));
+
     configure_outputs();
     set_alarm_state(false);
 
@@ -36,11 +39,12 @@ static void alarm_task(void *pvParameters)
 
     system_event_t event;
     while (1) {
-        if (xQueueReceive(event_queue, &event, portMAX_DELAY) == pdTRUE) {
+        if (xQueueReceive(event_queue, &event, pdMS_TO_TICKS(1000)) == pdTRUE) {
             bool active = (event == EVENT_WATER_DETECTED);
             ESP_LOGI(TAG, "Setting local alarm state: %s", active ? "ON" : "OFF");
             set_alarm_state(active);
         }
+        ESP_ERROR_CHECK(esp_task_wdt_reset());
     }
 }
 
