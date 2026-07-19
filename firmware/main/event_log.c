@@ -1,6 +1,7 @@
 #include "event_log.h"
 
 #include <inttypes.h>
+#include <stdbool.h>
 #include <string.h>
 
 #include "esp_log.h"
