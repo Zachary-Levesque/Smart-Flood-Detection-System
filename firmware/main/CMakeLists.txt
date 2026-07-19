@@ -2,7 +2,10 @@ idf_component_register(
     SRCS
         "main.c"
         "sensor_task.c"
+        "sensor_logic.c"
         "alarm_task.c"
+        "alert_task.c"
+        "event_log.c"
         "wifi_manager.c"
     INCLUDE_DIRS "."
     REQUIRES
@@ -11,4 +14,7 @@ idf_component_register(
         nvs_flash
         driver
         esp_timer
+        esp_http_client
+        esp-tls
+        esp_system
 )
