@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stdbool.h>
+
 // Initializes NVS, WiFi stack, and connects to the configured AP.
 // Handles automatic reconnection on disconnect. Non-blocking: the
 // rest of the system (sensor + local alarm) does not depend on this
