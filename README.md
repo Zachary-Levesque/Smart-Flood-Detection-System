@@ -7,28 +7,6 @@
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
-
-## Table of Contents
-- [Motivation](#motivation)
-- [Overview](#overview)
-- [System Architecture](#system-architecture)
-- [Hardware](#hardware)
-- [Bill of Materials](#bill-of-materials)
-- [Firmware](#firmware)
-- [Alerting & Connectivity](#alerting--connectivity)
-- [Setup & Installation](#setup--installation)
-- [Wiring Diagram](#wiring-diagram)
-- [Testing & Validation](#testing--validation)
-- [Reliability & Fail-Safe Design](#reliability--fail-safe-design)
-- [Results](#results)
-- [Lessons Learned](#lessons-learned)
-- [Roadmap](#roadmap)
-- [Repository Structure](#repository-structure)
-- [License](#license)
-- [Contact](#contact)
-
----
-
 ## Motivation
 
 After experiencing a basement flood firsthand, I wanted to build a system that could catch water intrusion early — before it causes significant damage — and notify me immediately, regardless of where I am. Rather than buying an off-the-shelf sensor, I built this project to apply systems engineering and embedded design principles to a real-world problem, and to explore the full stack of an IoT product: sensing, firmware, connectivity, and alerting.
@@ -172,12 +150,3 @@ Smart-Flood-Detection-System/
 ├── LICENSE
 └── README.md
 ```
-
-## License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
-
-## Contact
-
-Built by Zachary — Electrical Engineering & Physics student, University of Ottawa.
-Feel free to reach out or open an issue with questions or suggestions.
