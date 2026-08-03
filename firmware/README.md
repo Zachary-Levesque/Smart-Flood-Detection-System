@@ -1,12 +1,12 @@
 # Firmware
 
-This is the ESP IDF project for the Smart Flood Detection System, targeting the ESP32.
+This is the ESP IDF project for the Smart Flood Detection System, targeting the ESP32 C3 Mini.
 
 ## Task Architecture
 
 The firmware is split into independent FreeRTOS tasks. Sensor state changes are sent to dedicated queues so the local alarm path remains isolated from networking.
 
-1. `sensor_task` polls the water sensor with ADC, debounces readings, logs state changes, and sends each `system_event_t` to the local alarm queue first and the remote alert queue second.
+1. `sensor_task` polls the Seeed Studio Grove Water Level Sensor over I2C, debounces readings, logs state changes, and sends each `system_event_t` to the local alarm queue first and the remote alert queue second.
 2. `alarm_task` consumes its dedicated queue and drives the local buzzer and LED. It has no dependency on WiFi or networking.
 3. `alert_task` consumes a separate queue and sends Telegram HTTPS alerts only when `wifi_manager_is_connected()` is true.
 4. `wifi_manager` connects to the configured access point and handles automatic reconnect after drops.
@@ -17,12 +17,12 @@ This separation is deliberate. The primary safety function is the local alarm, a
 ## Production Hardening
 
 1. WiFi credentials are hardcoded in `app_config.h` for the prototype. A production build should use NVS backed WiFi provisioning with BLE or SoftAP setup.
-2. `WATER_THRESHOLD_RAW` must be set from raw ADC readings captured for dry, damp, wet, and submerged states.
+2. `WATER_LEVEL_THRESHOLD_PERCENT` must be set from level readings captured for dry, damp, wet, and submerged states.
 3. Long term deployment should use perfboard or a PCB in an enclosure.
 
 ## Calibration And Diagnostics
 
-1. Hold `CALIBRATION_MODE_GPIO` low at boot, or set `SENSOR_CALIBRATION_FORCE` to `1`, to stream raw ADC readings over serial while the firmware runs.
+1. Hold `CALIBRATION_MODE_GPIO` low at boot, or set `SENSOR_CALIBRATION_FORCE` to `1`, to stream water level readings over serial while the firmware runs.
 2. Hold `EVENT_LOG_DUMP_GPIO` low, or set `EVENT_LOG_DUMP_ON_BOOT` to `1`, to dump the RAM event log over serial.
 3. `sensor_logic.c/.h` contains pure threshold and debounce helpers intended for reuse from an ESP IDF unit test app.
 
@@ -32,10 +32,9 @@ Telegram alerting is implemented in `alert_task`. Fill in `TELEGRAM_BOT_TOKEN` a
 
 ## Building
 
-Requires the ESP IDF toolchain installed and sourced.
+Requires the ESP IDF toolchain installed and sourced. Set the target to esp32c3 before building.
 
 ```
-idf.py set target esp32
 idf.py menuconfig
 idf.py build
 idf.py flash monitor
@@ -51,7 +50,7 @@ main
   CMakeLists.txt        component build file
   app_config.h          pins, thresholds, WiFi config, shared types
   main.c                app_main wires up tasks
-  sensor_task.c/.h      water sensor polling and event fanout
+  sensor_task.c/.h      I2C water sensor polling and event fanout
   sensor_logic.c/.h     unit testable threshold and debounce helpers
   alarm_task.c/.h       local buzzer and LED
   alert_task.c/.h       Telegram HTTPS alerting
