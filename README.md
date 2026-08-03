@@ -3,7 +3,7 @@
 **ESP32-based IoT flood detection system** — real-time water-level sensing with WiFi connectivity, push/app alerts, and a focus on reliable, fail-safe operation for basement flood prevention.
 
 ![Platform](https://img.shields.io/badge/platform-ESP32-blue)
-![Status](https://img.shields.io/badge/status-in%20development-yellow)
+![Status](https://img.shields.io/badge/status-prototype%20complete-green)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 ---
@@ -25,8 +25,8 @@ The design prioritizes **reliability** and **fail-safe behavior** — a flood de
 
 ```
  ┌─────────────────┐      ┌──────────────┐      ┌──────────────────┐
- │  Water Sensor    │─────▶│    ESP32     │─────▶│  WiFi / MQTT      │
- │ (analog/digital) │      │  (firmware)  │      │  Broker / Backend  │
+ │  Water Sensor    │─────▶│    ESP32     │─────▶│ WiFi / HTTPS      │
+ │ (analog input)   │      │  (firmware)  │      │ Telegram Bot API   │
  └─────────────────┘      └──────┬───────┘      └─────────┬────────┘
                                   │                         │
                           ┌───────▼───────┐        ┌────────▼────────┐
@@ -36,30 +36,19 @@ The design prioritizes **reliability** and **fail-safe behavior** — a flood de
                                                      └──────────────────┘
 ```
 
-*(Architecture diagram will be replaced with a detailed schematic as the hardware design is finalized.)*
+See [hardware/block_diagram.svg](hardware/block_diagram.svg) for the visual block diagram and [hardware/block_diagram.md](hardware/block_diagram.md) for the editable Mermaid source.
 
 ## Hardware
 
 - **Microcontroller:** ESP32 (WiFi + BLE, dual-core, sufficient ADC pins for analog sensing)
 - **Sensor:** Water-level / moisture sensor (analog output for graduated water-level detection rather than simple binary wet/dry)
 - **Local alert:** Buzzer and/or LED indicator
-- **Power:** [To be finalized — evaluating mains adapter with battery backup for outage resilience]
-- **Enclosure:** [To be finalized — IP-rated enclosure for basement/humid environment]
+- **Power:** 5 V USB wall adapter, with USB battery backup/UPS recommended for outage resilience
+- **Enclosure:** Plastic project enclosure with cable glands or grommets; keep electronics above expected water level
 
 ## Bill of Materials
 
-| Component | Purpose | Qty |
-|---|---|---|
-| ESP32 Dev Board | Main controller, WiFi connectivity | 1 |
-| Water-level sensor | Detects water presence/depth | 1 |
-| Buzzer | Local audible alarm | 1 |
-| LED | Visual status indicator | 1–2 |
-| Resistors | Sensor/LED circuit protection | Assorted |
-| Breadboard / PCB | Prototyping / final assembly | 1 |
-| Enclosure | Environmental protection | 1 |
-| Power supply | Mains + battery backup | 1 |
-
-*(Full BOM with part numbers and cost will be added as components are finalized.)*
+The full prototype part list is maintained in [hardware/bill_of_materials.md](hardware/bill_of_materials.md). It includes the ESP32 board, analog water sensor, buzzer, LED, resistors, optional buzzer driver parts, wiring, power supply, backup power, enclosure, strain relief, and mounting hardware.
 
 ## Firmware
 
@@ -84,15 +73,19 @@ When the water threshold is exceeded, the firmware can send a Telegram bot notif
 git clone https://github.com/<your-username>/Smart-Flood-Detection-System.git
 cd Smart-Flood-Detection-System
 
-# Flash firmware to ESP32
-# (instructions to be added once firmware toolchain is finalized)
+# Build and flash firmware to ESP32
+cd firmware
+. $HOME/esp/esp-idf/export.sh
+idf.py set-target esp32
+idf.py build
+idf.py -p /dev/ttyUSB0 flash monitor
 ```
 
-Detailed step-by-step setup instructions — including NVS-based WiFi provisioning and final alert service setup — will be added as the build progresses. For now, WiFi credentials and Telegram placeholders live in `firmware/main/app_config.h`.
+For this prototype, WiFi credentials and Telegram placeholders live in `firmware/main/app_config.h`. Replace the `CHANGE_ME` values locally before flashing and do not commit real credentials.
 
 ## Wiring Diagram
 
-*(To be added — will include a labeled schematic showing sensor-to-ESP32 connections, power distribution, and buzzer/LED wiring.)*
+See [hardware/wiring.md](hardware/wiring.md) for the pin map, buzzer driver option, and deployment placement notes.
 
 ## Testing & Validation
 
@@ -104,7 +97,7 @@ To ensure this system performs reliably in a real flood scenario, testing will i
 - **Power loss testing** — verifying behavior on power interruption (battery backup validation)
 - **End-to-end alert latency** — time from water detection to notification received
 
-Results and test logs will be documented here as validation is completed.
+Use [docs/test_plan.md](docs/test_plan.md) to record validation results before deployment.
 
 ## Reliability & Fail-Safe Design
 
@@ -119,34 +112,37 @@ A flood detector is only useful if it works when it matters most. Key design pri
 
 ## Results
 
-*(To be populated with real deployment data: response times, uptime, any detected events, and photos/videos of the working system.)*
+The prototype design and firmware are complete in this repository. Physical validation must be recorded after assembling the hardware because the final ADC threshold depends on the exact sensor, placement, and water conditions.
 
 ## Lessons Learned
 
-*(To be populated as the project progresses — documenting design trade-offs, debugging challenges, and what I'd do differently.)*
+The most important design decision is keeping the local alarm path independent from network alerting. Remote notifications are useful, but the buzzer and LED must still activate if WiFi, Telegram, or the internet is unavailable.
 
-## Roadmap
+## Completion Status
 
-- [ ] Finalize sensor selection and calibrate thresholds using serial raw-ADC calibration mode
+- [x] Document block diagram, BOM, wiring, and validation plan
 - [x] Build firmware task architecture for sensing + local alarm
 - [x] Implement WiFi connectivity and reconnection logic
 - [x] Integrate Telegram push notification task
 - [x] Add local RAM event logging and serial dump trigger
 - [x] Add task watchdog coverage for sensor and alarm tasks
-- [ ] Add NVS-based WiFi credential provisioning
+
+## Physical Deployment Checklist
+
+- [ ] Calibrate `WATER_THRESHOLD_RAW` using serial raw-ADC calibration mode
+- [ ] Add NVS-based WiFi credential provisioning for a production version
 - [ ] Design and test enclosure for basement environment
 - [ ] Add battery backup for power-loss resilience
 - [ ] Conduct full end-to-end validation testing
-- [ ] Document results and finalize README
+- [ ] Document measured response time, uptime, and alert delivery results
 
 ## Repository Structure
 
 ```
 Smart-Flood-Detection-System/
 ├── firmware/        # ESP32 source code
-├── hardware/         # Schematics, BOM, wiring diagrams
-├── backend/          # Notification/cloud service (if applicable)
-├── docs/             # Architecture diagrams, design notes, test results
+├── hardware/        # Block diagram, BOM, wiring and pin map
+├── docs/            # Completion checklist and validation test plan
 ├── LICENSE
 └── README.md
 ```
