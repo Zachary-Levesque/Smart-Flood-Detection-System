@@ -32,12 +32,12 @@ See [hardware/block_diagram.md](hardware/block_diagram.md) for the block diagram
 1. **Microcontroller:** ESP32 development board with WiFi and ADC input.
 2. **Sensor:** Analog water level or moisture sensor.
 3. **Local alert:** Buzzer and status LED.
-4. **Power:** 5 V USB wall adapter, with USB battery backup or UPS recommended.
-5. **Enclosure:** Plastic project enclosure with cable glands or grommets. Keep electronics above expected water level.
+4. **Power:** 5 V USB wall adapter.
+5. **Enclosure:** Simple plastic project box.
 
 ## Bill Of Materials
 
-The full prototype part list is maintained in [hardware/bill_of_materials.md](hardware/bill_of_materials.md). It includes the ESP32 board, analog water sensor, buzzer, LED, resistors, optional buzzer driver parts, wiring, power supply, backup power, enclosure, strain relief, and mounting hardware.
+The simple part list is in [hardware/bill_of_materials.md](hardware/bill_of_materials.md).
 
 ## Firmware
 
@@ -62,7 +62,7 @@ Install and source the ESP IDF toolchain, then build, flash, and monitor the fir
 
 ## Wiring Diagram
 
-See [hardware/wiring.md](hardware/wiring.md) for the pin map, buzzer driver option, and deployment placement notes.
+See [hardware/wiring.md](hardware/wiring.md) for the simple pin map.
 
 ## Testing And Validation
 
@@ -74,7 +74,7 @@ To ensure this system performs reliably in a real flood scenario, testing includ
 4. Power interruption testing with the selected backup power method.
 5. End to end alert latency testing.
 
-Use [hardware/test_plan.md](hardware/test_plan.md) to record validation results before deployment.
+Use [hardware/test_plan.md](hardware/test_plan.md) for the simple test steps.
 
 ## Reliability And Fail Safe Design
 
@@ -96,7 +96,7 @@ The prototype design and firmware are complete in this repository. The completed
 ```
 Smart Flood Detection System
 firmware    ESP32 source code
-hardware    Block diagram, BOM, wiring, validation plan, and checklist
+hardware    Simple block diagram, part list, wiring, and test plan
 LICENSE
 README.md
 ```
