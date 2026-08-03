@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">Smart Flood Detection System Block Diagram</title>
+  <desc id="desc">Block diagram for an ESP32 C3 Mini flood detector using a Seeed Grove water level sensor, local buzzer and LED, WiFi, Telegram, and USB power.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#25313b"/>
+    </marker>
+    <style>
+      .bg { fill: #f7f9fb; }
+      .card { fill: #ffffff; stroke: #25313b; stroke-width: 3; rx: 16; }
+      .sensor { fill: #dff5ff; }
+      .brain { fill: #e8f7e6; }
+      .alarm { fill: #fff1d6; }
+      .net { fill: #eee7ff; }
+      .power { fill: #ffe9e2; }
+      .title { font: 700 34px Arial, sans-serif; fill: #17212b; }
+      .label { font: 700 23px Arial, sans-serif; fill: #17212b; }
+      .small { font: 18px Arial, sans-serif; fill: #394955; }
+      .wire { stroke: #25313b; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+      .thin { stroke-width: 3; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="760"/>
+  <text class="title" x="600" y="62" text-anchor="middle">Smart Flood Detection System</text>
+
+  <rect class="card sensor" x="70" y="210" width="260" height="140"/>
+  <text class="label" x="200" y="260" text-anchor="middle">Grove Water</text>
+  <text class="label" x="200" y="290" text-anchor="middle">Level Sensor</text>
+  <text class="small" x="200" y="322" text-anchor="middle">Seeed 101020635</text>
+
+  <rect class="card brain" x="470" y="190" width="270" height="180"/>
+  <text class="label" x="605" y="248" text-anchor="middle">ESP32 C3 Mini</text>
+  <text class="small" x="605" y="286" text-anchor="middle">I2C sensor read</text>
+  <text class="small" x="605" y="316" text-anchor="middle">Debounce logic</text>
+  <text class="small" x="605" y="346" text-anchor="middle">Event logging</text>
+
+  <rect class="card alarm" x="870" y="145" width="260" height="130"/>
+  <text class="label" x="1000" y="198" text-anchor="middle">Local Alarm</text>
+  <text class="small" x="1000" y="232" text-anchor="middle">Buzzer and LED</text>
+
+  <rect class="card net" x="870" y="360" width="260" height="140"/>
+  <text class="label" x="1000" y="414" text-anchor="middle">WiFi Alert</text>
+  <text class="small" x="1000" y="448" text-anchor="middle">Telegram message</text>
+  <text class="small" x="1000" y="478" text-anchor="middle">Phone notification</text>
+
+  <rect class="card power" x="470" y="520" width="270" height="110"/>
+  <text class="label" x="605" y="565" text-anchor="middle">USB Power</text>
+  <text class="small" x="605" y="598" text-anchor="middle">5 V adapter</text>
+
+  <path class="wire" d="M330 280 H470"/>
+  <path class="wire" d="M740 238 H870"/>
+  <path class="wire" d="M740 318 C800 318 810 430 870 430"/>
+  <path class="wire" d="M605 520 V370"/>
+
+  <text class="small" x="400" y="260" text-anchor="middle">I2C</text>
+  <text class="small" x="805" y="218" text-anchor="middle">GPIO</text>
+  <text class="small" x="808" y="392" text-anchor="middle">WiFi</text>
+</svg>
