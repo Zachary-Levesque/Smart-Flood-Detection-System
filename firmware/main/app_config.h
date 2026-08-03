@@ -2,31 +2,35 @@
 
 #include <stdint.h>
 
-#include "driver/adc.h"
 #include "driver/gpio.h"
+#include "driver/i2c.h"
 
 // =====================================================================
 // Pin configuration
 // Prototype pin assignments. These match hardware/wiring.md.
 // =====================================================================
-#define WATER_SENSOR_ADC_CHANNEL   ADC1_CHANNEL_6  // GPIO34 input only, ADC1
-#define BUZZER_GPIO                 GPIO_NUM_25
-#define STATUS_LED_GPIO             GPIO_NUM_26
+#define I2C_PORT                    I2C_NUM_0
+#define I2C_SDA_GPIO                GPIO_NUM_4
+#define I2C_SCL_GPIO                GPIO_NUM_5
+#define BUZZER_GPIO                 GPIO_NUM_6
+#define STATUS_LED_GPIO             GPIO_NUM_7
 #define CALIBRATION_MODE_GPIO       GPIO_NUM_0   // hold low at boot to stream raw ADC readings
 #define EVENT_LOG_DUMP_GPIO         GPIO_NUM_0   // hold low to dump recent events over serial
 
 // =====================================================================
 // Sensor thresholds
-// Calibrate this against real serial readings from calibration mode:
+// Calibrate this against real level readings from calibration mode:
 // 1. Flash firmware, hold CALIBRATION_MODE_GPIO low at boot, and open monitor.
-// 2. Record raw ADC values for dry, damp, wet, and submerged sensor states.
-// 3. Set WATER_THRESHOLD_RAW between the highest non flood reading and the
-//    lowest reading that should trigger the alarm.
+// 2. Record water level percent for dry, damp, wet, and submerged states.
+// 3. Set WATER_LEVEL_THRESHOLD_PERCENT to the level that should trigger alarm.
 // =====================================================================
-#define WATER_THRESHOLD_RAW         2000    // placeholder only; replace after calibration
+#define GROVE_WATER_LOW_ADDR        0x77
+#define GROVE_WATER_HIGH_ADDR       0x78
+#define GROVE_WATER_TOUCH_THRESHOLD 100
+#define WATER_LEVEL_THRESHOLD_PERCENT 10
 #define SENSOR_POLL_INTERVAL_MS     2000    // how often to sample the sensor
 #define SENSOR_DEBOUNCE_SAMPLES     3       // consecutive samples required to confirm a reading
-#define SENSOR_CALIBRATION_FORCE    0       // set to 1 to always stream raw ADC readings
+#define SENSOR_CALIBRATION_FORCE    0       // set to 1 to always stream level readings
 
 // =====================================================================
 // Runtime diagnostics
