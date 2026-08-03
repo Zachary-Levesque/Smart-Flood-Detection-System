@@ -2,10 +2,6 @@
 
 **ESP32-based IoT flood detection system** — real-time water-level sensing with WiFi connectivity, push/app alerts, and a focus on reliable, fail-safe operation for basement flood prevention.
 
-![Platform](https://img.shields.io/badge/platform-ESP32-blue)
-![Status](https://img.shields.io/badge/status-prototype%20complete-green)
-![License](https://img.shields.io/badge/license-MIT-green)
-
 ---
 ## Motivation
 
