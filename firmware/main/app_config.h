@@ -7,7 +7,7 @@
 
 // ---------------------------------------------------------------------
 // Pin configuration
-// TODO: confirm final pin assignments once hardware layout is finalized
+// Prototype pin assignments. These match hardware/wiring.md.
 // ---------------------------------------------------------------------
 #define WATER_SENSOR_ADC_CHANNEL   ADC1_CHANNEL_6  // GPIO34 (input-only, ADC1)
 #define BUZZER_GPIO                 GPIO_NUM_25
@@ -17,7 +17,7 @@
 
 // ---------------------------------------------------------------------
 // Sensor thresholds
-// TODO: Calibrate this against real serial readings from calibration mode:
+// Calibrate this against real serial readings from calibration mode:
 // 1. Flash firmware, hold CALIBRATION_MODE_GPIO low at boot, and open monitor.
 // 2. Record raw ADC values for dry, damp, wet, and submerged sensor states.
 // 3. Set WATER_THRESHOLD_RAW between the highest non-flood reading and the
@@ -43,7 +43,8 @@
 
 // ---------------------------------------------------------------------
 // WiFi configuration
-// TODO: Move credentials to NVS-backed provisioning before deployment.
+// Prototype credentials. For production, move credentials to NVS-backed
+// provisioning before deployment.
 // ESP-IDF's WiFi provisioning examples support BLE/SoftAP flows that store
 // credentials in NVS:
 // https://github.com/espressif/esp-idf/tree/master/examples/provisioning/wifi_prov_mgr
@@ -51,6 +52,7 @@
 #define WIFI_SSID                   "CHANGE_ME"
 #define WIFI_PASSWORD                "CHANGE_ME"
 #define WIFI_MAX_RETRY               5
+#define WIFI_RETRY_BACKOFF_MS        30000
 
 // ---------------------------------------------------------------------
 // Telegram alerting
