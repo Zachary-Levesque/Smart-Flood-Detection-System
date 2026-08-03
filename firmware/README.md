@@ -1,4 +1,4 @@
-# Firmware — ESP-IDF
+# Firmware
 
 This is the ESP-IDF project for the Smart Flood Detection System, targeting the ESP32.
 
