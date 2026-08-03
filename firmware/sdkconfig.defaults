@@ -1,6 +1,6 @@
 # Default project configuration overrides.
 # Run `idf.py menuconfig` to adjust further; this file seeds sane
-# defaults for a WiFi-connected sensor node.
+# defaults for a WiFi sensor node.
 
 CONFIG_ESP_WIFI_STATIC_RX_BUFFER_NUM=10
 CONFIG_ESP_WIFI_DYNAMIC_RX_BUFFER_NUM=32
