@@ -14,11 +14,11 @@ The firmware is split into independent FreeRTOS tasks. Sensor state changes are 
 
 This separation (sensing → local action, decoupled from networking) is a deliberate design choice: the system's primary safety function (the local alarm) must not depend on its secondary function (remote alerting).
 
-## Not yet implemented
+## Production hardening
 
-- **WiFi credential provisioning** — currently hardcoded in `app_config.h` for prototyping; a TODO points to ESP-IDF NVS-backed WiFi provisioning examples for a later BLE/SoftAP setup.
-- **Final sensor thresholds** — calibration support is present, but `WATER_THRESHOLD_RAW` remains a placeholder until raw ADC readings are captured for dry / damp / wet / submerged states.
-- **Exponential backoff on WiFi reconnection** — current retry logic is a fixed-count retry; noted as a TODO in `wifi_manager.c`.
+- **WiFi credential provisioning** — credentials are hardcoded in `app_config.h` for the prototype. A production build should use ESP-IDF NVS-backed WiFi provisioning with BLE or SoftAP setup.
+- **Final sensor thresholds** — calibration support is present, but `WATER_THRESHOLD_RAW` must be set from raw ADC readings captured for dry, damp, wet, and submerged states.
+- **Final enclosure/PCB implementation** — the prototype wiring is documented, but long-term deployment should use perfboard or a PCB in an enclosure.
 
 ## Calibration and diagnostics
 
