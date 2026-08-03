@@ -2,10 +2,6 @@
 
 **ESP32 based IoT flood detection system.** It monitors water level in real time, triggers a local buzzer and LED alarm, sends an optional Telegram alert over WiFi, and keeps recent events available over serial.
 
-<<<<<<< HEAD
-=======
----
->>>>>>> f4d59f3aa851a98f5fa585baec14d6797bfc3075
 ## Motivation
 
 After experiencing a basement flood firsthand, I wanted a system that could catch water intrusion early and notify me immediately. This project applies embedded design, sensing, connectivity, and reliability thinking to a real home safety problem.
