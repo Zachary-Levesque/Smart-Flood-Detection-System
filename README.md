@@ -97,7 +97,7 @@ To ensure this system performs reliably in a real flood scenario, testing will i
 - **Power loss testing** — verifying behavior on power interruption (battery backup validation)
 - **End-to-end alert latency** — time from water detection to notification received
 
-Use [docs/test_plan.md](docs/test_plan.md) to record validation results before deployment.
+Use [hardware/test_plan.md](hardware/test_plan.md) to record validation results before deployment.
 
 ## Reliability & Fail-Safe Design
 
@@ -141,8 +141,7 @@ The most important design decision is keeping the local alarm path independent f
 ```
 Smart-Flood-Detection-System/
 ├── firmware/        # ESP32 source code
-├── hardware/        # Block diagram, BOM, wiring and pin map
-├── docs/            # Completion checklist and validation test plan
+├── hardware/        # Block diagram, BOM, wiring, validation plan, and checklist
 ├── LICENSE
 └── README.md
 ```
