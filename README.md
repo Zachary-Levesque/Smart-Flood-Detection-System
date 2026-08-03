@@ -18,14 +18,7 @@ The design prioritizes reliability and fail safe behavior.
 
 ## System Architecture
 
-```
-Grove Water Sensor  to  ESP32 C3 Mini  to  WiFi and Telegram
-                         |
-                         v
-                 Local Buzzer and LED
-```
-
-See [hardware/block_diagram.md](hardware/block_diagram.md) for the block diagram.
+See [hardware/block_diagram.md](hardware/block_diagram.md) for the block diagram image.
 
 ## Hardware
 
