@@ -27,6 +27,7 @@ See [hardware/block_diagram.md](hardware/block_diagram.md) for the block diagram
 3. **Local alert:** Buzzer and status LED.
 4. **Power:** 5 V USB wall adapter.
 5. **Enclosure:** Simple plastic project box.
+6. **PCB:** Simple carrier PCB in [hardware/PCB](hardware/PCB).
 
 ## Bill Of Materials
 
@@ -56,6 +57,10 @@ Install and source the ESP IDF toolchain, then build, flash, and monitor the fir
 ## Wiring Diagram
 
 See [hardware/wiring.md](hardware/wiring.md) for the simple pin map.
+
+## PCB
+
+The breadboard version has been moved to a simple carrier PCB. The fabrication files are in [hardware/PCB/gerbers](hardware/PCB/gerbers).
 
 ## Testing And Validation
 
@@ -89,7 +94,7 @@ The prototype design and firmware are complete in this repository. The completed
 ```
 Smart Flood Detection System
 firmware    ESP32 C3 Mini source code
-hardware    Simple block diagram, part list, wiring, and test plan
+hardware    Block diagram, part list, wiring, PCB, and test plan
 LICENSE
 README.md
 ```
