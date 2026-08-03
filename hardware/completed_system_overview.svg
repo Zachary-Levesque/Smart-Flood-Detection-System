@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="820" viewBox="0 0 1400 820" role="img" aria-labelledby="title desc">
+  <title id="title">Completed Smart Flood Detection System</title>
+  <desc id="desc">Assembly drawing showing the ESP32 C3 Mini, custom carrier PCB, Seeed Grove water level sensor, buzzer, status LED, resistor, and Grove cable.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M2 2 L10 6 L2 10 Z" fill="#1f2933"/>
+    </marker>
+    <style>
+      text { font-family: Arial, sans-serif; fill: #17212b; }
+      .label { font-size: 23px; font-weight: 700; }
+      .small { font-size: 18px; }
+      .line { stroke: #1976d2; stroke-width: 4; fill: none; marker-end: url(#arrow); }
+      .wireBlack { stroke: #1f2933; stroke-width: 8; fill: none; stroke-linecap: round; }
+      .wireYellow { stroke: #f9c74f; stroke-width: 8; fill: none; stroke-linecap: round; }
+      .wireRed { stroke: #ef4444; stroke-width: 8; fill: none; stroke-linecap: round; }
+      .wireWhite { stroke: #f8fafc; stroke-width: 8; fill: none; stroke-linecap: round; }
+    </style>
+  </defs>
+
+  <rect width="1400" height="820" fill="#f7f9fb"/>
+  <text x="700" y="58" text-anchor="middle" font-size="34" font-weight="700">Completed Smart Flood Detection System</text>
+
+  <g id="sensor" transform="translate(80 120)">
+    <rect x="0" y="0" width="190" height="560" rx="14" fill="#0b73b7" stroke="#075985" stroke-width="4"/>
+    <circle cx="24" cy="24" r="11" fill="#f7f9fb" stroke="#075985" stroke-width="4"/>
+    <circle cx="166" cy="24" r="11" fill="#f7f9fb" stroke="#075985" stroke-width="4"/>
+    <circle cx="24" cy="536" r="11" fill="#f7f9fb" stroke="#075985" stroke-width="4"/>
+    <circle cx="166" cy="536" r="11" fill="#f7f9fb" stroke="#075985" stroke-width="4"/>
+    <rect x="51" y="27" width="88" height="36" rx="5" fill="#f8fafc" stroke="#d1d5db" stroke-width="3"/>
+    <rect x="61" y="63" width="11" height="18" fill="#d1a85b"/>
+    <rect x="86" y="63" width="11" height="18" fill="#d1a85b"/>
+    <rect x="111" y="63" width="11" height="18" fill="#d1a85b"/>
+    <rect x="136" y="63" width="11" height="18" fill="#d1a85b"/>
+    <text x="95" y="117" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="700">GROVE</text>
+    <text x="95" y="143" text-anchor="middle" fill="#ffffff" font-size="17">Water Level Sensor</text>
+    <text x="95" y="170" text-anchor="middle" fill="#ffffff" font-size="15">101020635</text>
+    <g stroke="#e9c46a" stroke-width="8" stroke-linecap="round">
+      <line x1="35" y1="215" x2="35" y2="500"/>
+      <line x1="55" y1="215" x2="55" y2="500"/>
+      <line x1="75" y1="215" x2="75" y2="500"/>
+      <line x1="95" y1="215" x2="95" y2="500"/>
+      <line x1="115" y1="215" x2="115" y2="500"/>
+      <line x1="135" y1="215" x2="135" y2="500"/>
+      <line x1="155" y1="215" x2="155" y2="500"/>
+    </g>
+  </g>
+
+  <path class="wireYellow" d="M215 150 C340 90 440 120 535 220"/>
+  <path class="wireWhite" d="M205 158 C330 110 430 138 525 232"/>
+  <path class="wireRed" d="M195 166 C320 130 420 156 515 244"/>
+  <path class="wireBlack" d="M185 174 C310 150 410 174 505 256"/>
+
+  <g id="pcb" transform="translate(500 215)">
+    <rect x="0" y="0" width="500" height="400" rx="22" fill="#148044" stroke="#0f5132" stroke-width="6"/>
+    <circle cx="35" cy="35" r="16" fill="#e5e7eb" stroke="#94a3b8" stroke-width="5"/>
+    <circle cx="465" cy="35" r="16" fill="#e5e7eb" stroke="#94a3b8" stroke-width="5"/>
+    <circle cx="35" cy="365" r="16" fill="#e5e7eb" stroke="#94a3b8" stroke-width="5"/>
+    <circle cx="465" cy="365" r="16" fill="#e5e7eb" stroke="#94a3b8" stroke-width="5"/>
+
+    <g fill="#d6a94b" stroke="#8a6a20" stroke-width="3">
+      <circle cx="100" cy="100" r="12"/>
+      <circle cx="100" cy="125.4" r="12"/>
+      <circle cx="100" cy="150.8" r="12"/>
+      <circle cx="100" cy="176.2" r="12"/>
+      <circle cx="100" cy="201.6" r="12"/>
+      <circle cx="100" cy="227" r="12"/>
+      <circle cx="400" cy="100" r="12"/>
+      <circle cx="400" cy="125.4" r="12"/>
+      <circle cx="400" cy="150.8" r="12"/>
+      <circle cx="400" cy="176.2" r="12"/>
+      <circle cx="400" cy="280" r="12"/>
+      <circle cx="400" cy="305.4" r="12"/>
+      <circle cx="230" cy="300" r="13"/>
+      <circle cx="280" cy="300" r="13"/>
+      <circle cx="330" cy="300" r="13"/>
+      <circle cx="380" cy="300" r="13"/>
+    </g>
+
+    <g stroke="#86efac" stroke-width="6" fill="none" stroke-linecap="round">
+      <path d="M100 100 L400 150.8"/>
+      <path d="M100 125.4 L400 176.2"/>
+      <path d="M100 150.8 L400 125.4"/>
+      <path d="M100 176.2 L400 100"/>
+      <path d="M100 201.6 L400 280"/>
+      <path d="M100 227 L230 300"/>
+      <path d="M280 300 L330 300"/>
+      <path d="M380 300 L100 125.4"/>
+    </g>
+
+    <rect x="72" y="72" width="64" height="185" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="4"/>
+    <text x="104" y="287" text-anchor="middle" font-size="17" font-weight="700">J1</text>
+
+    <rect x="365" y="64" width="70" height="132" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="4"/>
+    <text x="400" y="224" text-anchor="middle" font-size="17" font-weight="700">J2</text>
+
+    <rect x="362" y="258" width="76" height="70" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="4"/>
+    <text x="400" y="354" text-anchor="middle" font-size="17" font-weight="700">J3</text>
+
+    <rect x="220" y="286" width="72" height="28" rx="8" fill="#d6a94b" stroke="#8a6a20" stroke-width="4"/>
+    <g transform="translate(320 270)">
+      <circle cx="45" cy="40" r="17" fill="#ff2626" stroke="#991b1b" stroke-width="4"/>
+      <circle cx="45" cy="40" r="8" fill="#fff3f3"/>
+      <rect x="28" y="58" width="34" height="12" fill="#64748b"/>
+    </g>
+
+    <circle cx="395" cy="240" r="45" fill="#111827" stroke="#020617" stroke-width="5"/>
+    <circle cx="395" cy="240" r="10" fill="#374151"/>
+    <text x="395" y="54" text-anchor="middle" fill="#ffffff" font-size="20" font-weight="700">Carrier PCB</text>
+
+    <g transform="translate(155 75)">
+      <rect x="0" y="0" width="190" height="175" rx="15" fill="#111827" stroke="#020617" stroke-width="5"/>
+      <rect x="48" y="32" width="94" height="74" rx="7" fill="#c0a060" stroke="#806533" stroke-width="3"/>
+      <rect x="70" y="126" width="52" height="34" rx="6" fill="#d1d5db" stroke="#6b7280" stroke-width="3"/>
+      <g fill="#d6a94b">
+        <circle cx="16" cy="25" r="5"/>
+        <circle cx="16" cy="48" r="5"/>
+        <circle cx="16" cy="71" r="5"/>
+        <circle cx="16" cy="94" r="5"/>
+        <circle cx="16" cy="117" r="5"/>
+        <circle cx="174" cy="25" r="5"/>
+        <circle cx="174" cy="48" r="5"/>
+        <circle cx="174" cy="71" r="5"/>
+        <circle cx="174" cy="94" r="5"/>
+        <circle cx="174" cy="117" r="5"/>
+      </g>
+      <text x="95" y="22" text-anchor="middle" fill="#ffffff" font-size="18" font-weight="700">ESP32 C3 Mini</text>
+    </g>
+  </g>
+
+  <text class="label" x="175" y="735" text-anchor="middle">Grove Water Sensor</text>
+  <path class="line" d="M175 710 L175 675"/>
+  <text class="label" x="750" y="705" text-anchor="middle">Custom Carrier PCB</text>
+  <path class="line" d="M750 675 L750 610"/>
+  <text class="label" x="755" y="145" text-anchor="middle">ESP32 C3 Mini</text>
+  <path class="line" d="M755 160 L750 286"/>
+  <text class="label" x="1110" y="445">Buzzer</text>
+  <path class="line" d="M1085 438 L940 455"/>
+  <text class="label" x="1040" y="620">Status LED</text>
+  <path class="line" d="M1015 610 L870 535"/>
+  <text class="label" x="345" y="105">Grove Cable</text>
+  <path class="line" d="M345 125 L300 155"/>
+</svg>
