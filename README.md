@@ -60,10 +60,6 @@ Install and source the ESP IDF toolchain, then build, flash, and monitor the fir
 
 See [hardware/wiring.md](hardware/wiring.md) for the simple pin map.
 
-## PCB
-
-The breadboard version has been moved to a simple carrier PCB. The fabrication files are in [hardware/PCB/gerbers](hardware/PCB/gerbers).
-
 ## Testing And Validation
 
 To ensure this system performs reliably in a real flood scenario, testing includes:
