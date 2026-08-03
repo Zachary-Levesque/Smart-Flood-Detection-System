@@ -1,6 +1,6 @@
 # Smart Flood Detection System
 
-**ESP32 based IoT flood detection system.** It monitors water level in real time, triggers a local buzzer and LED alarm, sends a Telegram alert over WiFi, and keeps recent events available.
+**ESP32 C3 Mini based IoT flood detection system.** It monitors water level in real time, triggers a local buzzer and LED alarm, sends a Telegram alert over WiFi, and keeps recent events available.
 
 ## Motivation
 
@@ -8,7 +8,7 @@ After experiencing a basement flood for the second time in 14 months, I wanted a
 
 ## Overview
 
-This system continuously monitors water presence using an analog water sensor connected to an ESP32. When water is detected above the calibrated threshold, the system:
+This system continuously monitors water presence using a Seeed Studio Grove Water Level Sensor connected to an ESP32 C3 Mini over I2C. When water is detected above the calibrated threshold, the system:
 
 1. Triggers the local buzzer and LED.
 2. Sends a Telegram notification when WiFi and credentials are available.
@@ -19,7 +19,7 @@ The design prioritizes reliability and fail safe behavior.
 ## System Architecture
 
 ```
-Water Sensor  to  ESP32 Firmware  to  WiFi and Telegram
+Grove Water Sensor  to  ESP32 C3 Mini  to  WiFi and Telegram
                          |
                          v
                  Local Buzzer and LED
@@ -29,8 +29,8 @@ See [hardware/block_diagram.md](hardware/block_diagram.md) for the block diagram
 
 ## Hardware
 
-1. **Microcontroller:** ESP32 development board with WiFi and ADC input.
-2. **Sensor:** Analog water level or moisture sensor.
+1. **Microcontroller:** ESP32 C3 Mini.
+2. **Sensor:** Seeed Studio Grove Water Level Sensor 101020635.
 3. **Local alert:** Buzzer and status LED.
 4. **Power:** 5 V USB wall adapter.
 5. **Enclosure:** Simple plastic project box.
@@ -41,9 +41,9 @@ The simple part list is in [hardware/bill_of_materials.md](hardware/bill_of_mate
 
 ## Firmware
 
-Firmware is developed for the ESP32 using ESP IDF. It handles:
+Firmware is developed for the ESP32 C3 Mini using ESP IDF. It handles:
 
-1. Periodic sensor polling with debounce logic.
+1. Periodic I2C sensor polling with debounce logic.
 2. WiFi connection management and reconnect handling.
 3. Threshold based water detection.
 4. Local event logging.
@@ -95,7 +95,7 @@ The prototype design and firmware are complete in this repository. The completed
 
 ```
 Smart Flood Detection System
-firmware    ESP32 source code
+firmware    ESP32 C3 Mini source code
 hardware    Simple block diagram, part list, wiring, and test plan
 LICENSE
 README.md
