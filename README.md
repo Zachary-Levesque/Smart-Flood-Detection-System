@@ -18,7 +18,7 @@ The design prioritizes reliability and fail safe behavior.
 
 ## System Architecture
 
-See [hardware/block_diagram.md](hardware/block_diagram.md) for the block diagram image.
+See [hardware/block_diagram.md](hardware/block_diagram.md) for the block diagram.
 
 ## Hardware
 
@@ -73,17 +73,6 @@ To ensure this system performs reliably in a real flood scenario, testing includ
 5. End to end alert latency testing.
 
 Use [hardware/test_plan.md](hardware/test_plan.md) for the simple test steps.
-
-## Reliability And Fail Safe Design
-
-Key design principles:
-
-1. Local first alarms keep buzzer and LED behavior independent from WiFi.
-2. Separate queues prevent network work from blocking the local alarm path.
-3. Reconnect handling keeps WiFi recovery automatic.
-4. Sensor debounce logic reduces false triggers.
-5. Task watchdog coverage helps recover from firmware hangs.
-6. Battery backup is recommended because power loss can happen during storms.
 
 ## Results
 
