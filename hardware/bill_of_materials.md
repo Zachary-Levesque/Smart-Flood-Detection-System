@@ -8,7 +8,7 @@
 4. LED.
 5. 220 ohm resistor for the LED.
 6. Jumper wires.
-7. Breadboard or small perfboard.
+7. Custom carrier PCB.
 8. USB cable.
 9. 5 V USB power adapter.
 10. Plastic enclosure.
