@@ -9,14 +9,14 @@ typedef struct {
     system_event_t last_reported_state;
 } sensor_debounce_state_t;
 
-static inline bool sensor_raw_is_wet(int raw, int threshold)
+static inline bool sensor_level_is_wet(int level_percent, int threshold_percent)
 {
-    return raw >= threshold;
+    return level_percent >= threshold_percent;
 }
 
 void sensor_debounce_init(sensor_debounce_state_t *state);
 system_event_t sensor_debounce_update(sensor_debounce_state_t *state,
-                                      int raw,
-                                      int threshold,
+                                      int level_percent,
+                                      int threshold_percent,
                                       int required_samples,
                                       bool *changed);
