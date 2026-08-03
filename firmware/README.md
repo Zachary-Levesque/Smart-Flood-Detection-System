@@ -1,60 +1,60 @@
 # Firmware
 
-This is the ESP-IDF project for the Smart Flood Detection System, targeting the ESP32.
+This is the ESP IDF project for the Smart Flood Detection System, targeting the ESP32.
 
-## Task architecture
+## Task Architecture
 
-The firmware is split into independent FreeRTOS tasks. Sensor state changes are fanned out to dedicated queues so the local alarm path remains isolated from networking:
+The firmware is split into independent FreeRTOS tasks. Sensor state changes are sent to dedicated queues so the local alarm path remains isolated from networking.
 
-- **`sensor_task`** — polls the water sensor via ADC on a fixed interval, debounces readings to avoid false positives, logs state changes, and pushes each `system_event_t` to the local alarm queue first and the remote alert queue second.
-- **`alarm_task`** — consumes events from its dedicated queue and drives the local buzzer/LED. This task has **no dependency on WiFi or networking** — it will fire the physical alarm even if the network is completely down. This is the core fail-safe guarantee of the system.
-- **`alert_task`** — consumes events from a separate queue and sends Telegram HTTPS alerts only when `wifi_manager_is_connected()` is true. Failed or skipped remote alerts do not affect local alarm behavior.
-- **`wifi_manager`** — connects to the configured access point and handles automatic reconnection on drop. Runs independently and does not block sensor/alarm logic.
-- **`event_log`** — stores timestamped water-state events in a small RAM ring buffer and can dump the log over serial when the configured dump GPIO/build flag is active.
+1. `sensor_task` polls the water sensor with ADC, debounces readings, logs state changes, and sends each `system_event_t` to the local alarm queue first and the remote alert queue second.
+2. `alarm_task` consumes its dedicated queue and drives the local buzzer and LED. It has no dependency on WiFi or networking.
+3. `alert_task` consumes a separate queue and sends Telegram HTTPS alerts only when `wifi_manager_is_connected()` is true.
+4. `wifi_manager` connects to the configured access point and handles automatic reconnect after drops.
+5. `event_log` stores timestamped water state events in a RAM ring buffer and can dump the log over serial.
 
-This separation (sensing → local action, decoupled from networking) is a deliberate design choice: the system's primary safety function (the local alarm) must not depend on its secondary function (remote alerting).
+This separation is deliberate. The primary safety function is the local alarm, and it must not depend on remote alerting.
 
-## Production hardening
+## Production Hardening
 
-- **WiFi credential provisioning** — credentials are hardcoded in `app_config.h` for the prototype. A production build should use ESP-IDF NVS-backed WiFi provisioning with BLE or SoftAP setup.
-- **Final sensor thresholds** — calibration support is present, but `WATER_THRESHOLD_RAW` must be set from raw ADC readings captured for dry, damp, wet, and submerged states.
-- **Final enclosure/PCB implementation** — the prototype wiring is documented, but long-term deployment should use perfboard or a PCB in an enclosure.
+1. WiFi credentials are hardcoded in `app_config.h` for the prototype. A production build should use NVS backed WiFi provisioning with BLE or SoftAP setup.
+2. `WATER_THRESHOLD_RAW` must be set from raw ADC readings captured for dry, damp, wet, and submerged states.
+3. Long term deployment should use perfboard or a PCB in an enclosure.
 
-## Calibration and diagnostics
+## Calibration And Diagnostics
 
-- Hold `CALIBRATION_MODE_GPIO` low at boot, or set `SENSOR_CALIBRATION_FORCE` to `1`, to stream raw ADC readings over serial while the firmware runs.
-- Hold `EVENT_LOG_DUMP_GPIO` low, or set `EVENT_LOG_DUMP_ON_BOOT` to `1`, to dump the RAM event log over serial.
-- `sensor_logic.c/.h` contains pure threshold/debounce helpers intended to be reused from the ESP-IDF unit test app.
+1. Hold `CALIBRATION_MODE_GPIO` low at boot, or set `SENSOR_CALIBRATION_FORCE` to `1`, to stream raw ADC readings over serial while the firmware runs.
+2. Hold `EVENT_LOG_DUMP_GPIO` low, or set `EVENT_LOG_DUMP_ON_BOOT` to `1`, to dump the RAM event log over serial.
+3. `sensor_logic.c/.h` contains pure threshold and debounce helpers intended for reuse from an ESP IDF unit test app.
 
-## Remote alerting
+## Remote Alerting
 
-Telegram alerting is implemented in `alert_task`. Fill in `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in `app_config.h` locally before flashing; real credentials should not be committed.
+Telegram alerting is implemented in `alert_task`. Fill in `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` in `app_config.h` locally before flashing. Real credentials should not be committed.
 
 ## Building
 
-Requires the ESP-IDF toolchain installed and sourced (`. $HOME/esp/esp-idf/export.sh`).
+Requires the ESP IDF toolchain installed and sourced.
 
-```bash
-idf.py set-target esp32
-idf.py menuconfig   # optional, to review sdkconfig
+```
+idf.py set target esp32
+idf.py menuconfig
 idf.py build
-idf.py -p /dev/ttyUSB0 flash monitor
+idf.py flash monitor
 ```
 
-## File overview
+## File Overview
 
 ```
-firmware/
-├── CMakeLists.txt          # top-level project build file
-├── sdkconfig.defaults       # default build configuration
-└── main/
-    ├── CMakeLists.txt       # component build file
-    ├── app_config.h         # pins, thresholds, WiFi config, shared types
-    ├── main.c                # app_main — wires up tasks
-    ├── sensor_task.c/.h      # water sensor polling + event fanout
-    ├── sensor_logic.c/.h     # unit-testable threshold/debounce helpers
-    ├── alarm_task.c/.h       # local buzzer/LED, network-independent
-    ├── alert_task.c/.h       # Telegram HTTPS alerting
-    ├── event_log.c/.h        # RAM event log + serial dump
-    └── wifi_manager.c/.h     # WiFi connection + reconnection handling
+firmware
+CMakeLists.txt          top level project build file
+sdkconfig.defaults      default build configuration
+main
+  CMakeLists.txt        component build file
+  app_config.h          pins, thresholds, WiFi config, shared types
+  main.c                app_main wires up tasks
+  sensor_task.c/.h      water sensor polling and event fanout
+  sensor_logic.c/.h     unit testable threshold and debounce helpers
+  alarm_task.c/.h       local buzzer and LED
+  alert_task.c/.h       Telegram HTTPS alerting
+  event_log.c/.h        RAM event log and serial dump
+  wifi_manager.c/.h     WiFi connection and reconnect handling
 ```
