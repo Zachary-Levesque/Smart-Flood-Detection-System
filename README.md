@@ -1,10 +1,10 @@
 # Smart Flood Detection System
 
-**ESP32 based IoT flood detection system.** It monitors water level in real time, triggers a local buzzer and LED alarm, sends an optional Telegram alert over WiFi, and keeps recent events available over serial.
+**ESP32 based IoT flood detection system.** It monitors water level in real time, triggers a local buzzer and LED alarm, sends a Telegram alert over WiFi, and keeps recent events available.
 
 ## Motivation
 
-After experiencing a basement flood firsthand, I wanted a system that could catch water intrusion early and notify me immediately. This project applies embedded design, sensing, connectivity, and reliability thinking to a real home safety problem.
+After experiencing a basement flood for the second time in 14 months, I wanted a system that could catch water leakage early and notify me immediately. This project applies embedded design, sensing, connectivity, and reliability thinking to a real home safety problem.
 
 ## Overview
 
@@ -14,7 +14,7 @@ This system continuously monitors water presence using an analog water sensor co
 2. Sends a Telegram notification when WiFi and credentials are available.
 3. Logs the event with a timestamp for later serial review.
 
-The design prioritizes reliability and fail safe behavior. The local alarm does not depend on WiFi, Telegram, or internet access.
+The design prioritizes reliability and fail safe behavior.
 
 ## System Architecture
 
@@ -89,29 +89,7 @@ Key design principles:
 
 ## Results
 
-The prototype design and firmware are complete in this repository. Physical validation must be recorded after assembling the hardware because the final ADC threshold depends on the exact sensor, placement, and water conditions.
-
-## Lessons Learned
-
-The most important design decision is keeping the local alarm path independent from network alerting. Remote notifications are useful, but the buzzer and LED must still activate if WiFi, Telegram, or the internet is unavailable.
-
-## Completion Status
-
-1. Done: Document block diagram, BOM, wiring, and validation plan.
-2. Done: Build firmware task architecture for sensing and local alarm.
-3. Done: Implement WiFi connectivity and reconnect logic.
-4. Done: Integrate Telegram push notification task.
-5. Done: Add local RAM event logging and serial dump trigger.
-6. Done: Add task watchdog coverage for sensor and alarm tasks.
-
-## Physical Deployment Checklist
-
-1. Calibrate `WATER_THRESHOLD_RAW` using serial raw ADC calibration mode.
-2. Add NVS based WiFi credential provisioning for a production version.
-3. Design and test enclosure for basement environment.
-4. Add battery backup for power loss resilience.
-5. Conduct full end to end validation testing.
-6. Document measured response time, uptime, and alert delivery results.
+The prototype design and firmware are complete in this repository. The completed system is implemented and live in my basement!
 
 ## Repository Structure
 
