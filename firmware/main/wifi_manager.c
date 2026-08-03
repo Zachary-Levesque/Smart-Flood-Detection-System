@@ -47,7 +47,7 @@ static void event_handler(void *arg, esp_event_base_t event_base,
         s_connected = false;
         xEventGroupClearBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
 
-        // Reconnection logic: this is the core of the "fail-safe"
+        // Reconnection logic: this is the core fail safe
         // connectivity requirement. We never give up permanently —
         // a flood detector that stops retrying after N failures is
         // a flood detector that can silently go offline for good.
