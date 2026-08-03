@@ -7,12 +7,12 @@ void sensor_debounce_init(sensor_debounce_state_t *state)
 }
 
 system_event_t sensor_debounce_update(sensor_debounce_state_t *state,
-                                      int raw,
-                                      int threshold,
+                                      int level_percent,
+                                      int threshold_percent,
                                       int required_samples,
                                       bool *changed)
 {
-    if (sensor_raw_is_wet(raw, threshold)) {
+    if (sensor_level_is_wet(level_percent, threshold_percent)) {
         state->consecutive_wet_samples++;
     } else {
         state->consecutive_wet_samples = 0;
