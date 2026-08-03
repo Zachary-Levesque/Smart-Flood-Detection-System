@@ -14,7 +14,7 @@
 #define I2C_SCL_GPIO                GPIO_NUM_5
 #define BUZZER_GPIO                 GPIO_NUM_6
 #define STATUS_LED_GPIO             GPIO_NUM_7
-#define CALIBRATION_MODE_GPIO       GPIO_NUM_0   // hold low at boot to stream raw ADC readings
+#define CALIBRATION_MODE_GPIO       GPIO_NUM_0   // hold low at boot to stream level readings
 #define EVENT_LOG_DUMP_GPIO         GPIO_NUM_0   // hold low to dump recent events over serial
 
 // =====================================================================
