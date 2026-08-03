@@ -6,7 +6,7 @@
 2. Firmware controls the buzzer and LED.
 3. Firmware sends Telegram alerts.
 4. Firmware reconnects WiFi after drops.
-5. Hardware list and wiring notes are included.
+5. Hardware list, wiring notes, and PCB files are included.
 
 ## Before Final Use
 
@@ -15,3 +15,4 @@
 3. Test the sensor with water.
 4. Confirm the buzzer and LED turn on.
 5. Place the ESP32 in an enclosure above the floor.
+6. Order and test the carrier PCB.
