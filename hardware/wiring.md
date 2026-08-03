@@ -18,3 +18,4 @@
 3. Put the sensor where water would appear first.
 4. Mount the ESP32 higher than the sensor.
 5. Test the sensor, buzzer, and LED before putting the project in the enclosure.
+6. Use the carrier PCB in `hardware/PCB` instead of a breadboard.
