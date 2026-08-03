@@ -18,7 +18,9 @@ The design prioritizes reliability and fail safe behavior.
 
 ## System Architecture
 
-See [hardware/block_diagram.md](hardware/block_diagram.md) for the block diagram.
+![Completed Smart Flood Detection System](hardware/completed_system_overview.svg)
+
+See [hardware/block_diagram.md](hardware/block_diagram.md) for the completed system image.
 
 ## Hardware
 
